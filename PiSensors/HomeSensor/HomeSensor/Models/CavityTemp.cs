@@ -49,7 +49,7 @@ namespace HomeSensor.Models
 			try {				
 				ProcessStartInfo start = new ProcessStartInfo();
 				start.FileName = "php"; //"/etc/php5/cli/php.ini";
-				start.Arguments = "/home/pi/sensors_php/cavityTemp.php";
+				start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/cavityTemp.php";
 				start.UseShellExecute = false;
 				start.RedirectStandardOutput = true;
 				string line = "";
@@ -69,7 +69,7 @@ namespace HomeSensor.Models
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("error:  " + ex.Message);
+				Console.WriteLine("cavity temp error:  " + ex.Message);
 				string error2 = ex.Message;
 			}
 		}

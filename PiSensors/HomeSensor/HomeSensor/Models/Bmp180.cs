@@ -15,14 +15,10 @@ namespace HomeSensor.Models
         public double pressure { get; set; }
         public double altitude { get; set; }
         public double temp { get; set; }
-
         private I2CBus bus;
-
         private short AC1, AC2, AC3, B1, B2, MB, MC, MD;
         private ushort AC4, AC5, AC6;
-
         private int deviceID = 0x77;
-        private static HttpClient client = new HttpClient();
         public Bmp180 reading;
 
 		public Bmp180 ()

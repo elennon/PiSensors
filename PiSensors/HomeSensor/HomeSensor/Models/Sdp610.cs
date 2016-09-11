@@ -33,7 +33,7 @@ namespace HomeSensor.Models
 			try {				
 				ProcessStartInfo start = new ProcessStartInfo();
 				start.FileName = "php"; //"/etc/php5/cli/php.ini";
-				start.Arguments = "/home/pi/sensors_php/sdp.php";
+				start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/sdp.php";
 				start.UseShellExecute = false;
 				start.RedirectStandardOutput = true;
 				string line = "";
@@ -61,11 +61,10 @@ namespace HomeSensor.Models
 						}
 					}
 				}
-				//await PostReading(sdp);
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("error:  " + ex.Message);
+				Console.WriteLine("Sdp610 error:  " + ex.Message);
 				string error2 = ex.Message;
 			}
 			return val;

@@ -27,7 +27,7 @@ namespace HomeSensor
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("error:  " + ex.Message);
+				Console.WriteLine("Post error:  " + ex.Message);
 				string error2 = ex.Message;
 			}
 		}
@@ -51,14 +51,12 @@ namespace HomeSensor
 		public static T deserializeJSON<T>(string json)
 		{
 			var instance = typeof(T);
-
 			using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(json)))
 			{
 				DataContractJsonSerializer deserializer = new DataContractJsonSerializer(instance.GetType());
 				return (T)deserializer.ReadObject(ms);
 			}
 		}
-
 	}
 }
 

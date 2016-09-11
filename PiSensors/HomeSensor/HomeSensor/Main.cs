@@ -18,11 +18,12 @@ class Programer
 		static BackgroundWorker _bw = new BackgroundWorker();
 		public static List<double> sdpReadings = new List<double> ();
 		private static object lck = new object();
+		private static Sdp610 sdp = new Sdp610 ();
 
         static void Main(string[] args)
         {     
 			_bw.DoWork += bw_DoWork;
-			//_bw.R
+			_bw.RunWorkerAsync (sdp);
             while(run)
 			{    
 				System.Threading.Thread.Sleep(30000);

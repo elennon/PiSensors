@@ -40,26 +40,21 @@ namespace HomeSensor.Models
             {
                 ProcessStartInfo start = new ProcessStartInfo();
 				start.FileName = "sh"; //"/etc/php5/cli/php.ini";
-				start.Arguments = string.Format("-c \"sudo {0}\"", "/home/pi/src2/eye2c");// "/home/pi/src2/eye2c";
+				start.Arguments = string.Format("-c \"sudo {0}\"", "/home/pi/PiSensors/PiSensors/src/eye2c");// "/home/pi/src2/eye2c";
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
                 
                 using (Process process = Process.Start(start))
                 {
-					var scalp = process.StandardOutput.ReadToEnd();
-                    using (StreamReader reader = process.StandardOutput)
-                    {
-                        line = reader.ReadToEnd();
-                    }
+					line = process.StandardOutput.ReadToEnd();                  
                 }               
             }
             catch (Exception ex)
             {
-                Console.WriteLine("error:  " + ex.Message);
+                Console.WriteLine("GetMlx906 error:  " + ex.Message);
                 string error2 = ex.Message;
             }
             return line;
         }
-
     }
 }
