@@ -29,33 +29,22 @@ namespace HomeSensor.Models
 
 	public class CavityTemp : Reading
 	{
-		public Guid _id { get; set; }
 		public DateTime _time { get; set; }
 		public double val { get; set; }
 
-		private static HttpClient client = new HttpClient();
+        public CavityTemp()
+        {
+            Id = Guid.NewGuid();
+			ok = 1;
+            msg = "OK";
+            sensor = "cavity_temp";
+            ip = "pi_sensor_1";
+            time = DateTime.Now;
+            createdAt = DateTime.Now;
+            GetCavityTemp();
+        }
 
-		private async Task PostReading(CavityTemp rd)
-		{
-			client = new HttpClient();
-			try
-			{
-				string resourceAddress = "http://192.168.43.49/moosareback/api/cavitytemps";
-				//var gg = await client.GetStringAsync(resourceAddress);
-				//Console.WriteLine("plop:  " + gg);
-				string postBody = Common.JsonSerializer(rd);
-				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
-				//Console.WriteLine("response:  " + response);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("error:  " + ex.Message);
-				string error2 = ex.Message;
-			}
-		}
-
-		public async Task GetCavityTemp()
+		public void GetCavityTemp()
 		{
 			try {				
 				ProcessStartInfo start = new ProcessStartInfo();
@@ -64,17 +53,7 @@ namespace HomeSensor.Models
 				start.UseShellExecute = false;
 				start.RedirectStandardOutput = true;
 				string line = "";
-				CavityTemp cp = new CavityTemp()
-				{
-					_id = Guid.NewGuid(),
-					ok = 1,
-					msg = "OK",
-					sensor = "cavity_temp",
-					ip = "pi_sensor_1",
-					time = DateTime.Now,
-					createdAt = DateTime.Now
-				};
-
+				
 				using (Process process = Process.Start(start))
 				{
 					using (StreamReader reader = process.StandardOutput) 
@@ -82,12 +61,11 @@ namespace HomeSensor.Models
 						while ((line = reader.ReadLine ()) != null) 
 						{							
 							cpReading rd = JsonConvert.DeserializeObject<cpReading>(line);
-							cp._time = new DateTime (rd.time * 1000);
-							cp.val = rd.data;
+							this.time = new DateTime (rd.time * 1000);
+							this.val = rd.data;
 						}
 					}
 				}
-				await PostReading(cp);
 			}
 			catch (Exception ex)
 			{

@@ -17,27 +17,16 @@ namespace HomeSensor.Models
 		public DateTime _time { get; set; }
 		public double val { get; set; }
 
-		private static HttpClient client = new HttpClient();
-
-		public async Task PostReading(Sdp610 rd)
-		{
-			client = new HttpClient();
-			try
-			{
-				string resourceAddress = "http://192.168.43.49/moosareback/api/sdp610";
-				//var gg = await client.GetStringAsync(resourceAddress);
-				//Console.WriteLine("plop:  " + gg);
-				string postBody = Common.JsonSerializer(rd);
-				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
-				//Console.WriteLine("response:  " + response);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("error:  " + ex.Message);
-				string error2 = ex.Message;
-			}
-		}
+        public Sdp610()
+        {
+            _id = Guid.NewGuid();
+            ok = 1;
+            msg = "OK";
+            sensor = "pi_sensor_1";
+            ip = "sdp610";
+            time = DateTime.Now;
+            createdAt = DateTime.Now;
+        }
 
 		public double GetSdp610()
 		{

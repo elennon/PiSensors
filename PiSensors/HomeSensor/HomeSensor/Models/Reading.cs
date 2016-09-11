@@ -8,6 +8,7 @@ namespace HomeSensor.Models
 {
 	public class Reading
     {
+        public Guid Id { get; set; }
         public int ok { get; set; }
         public string msg { get; set; }
         public string sensor { get; set; }

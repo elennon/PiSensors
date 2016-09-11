@@ -12,7 +12,6 @@ namespace HomeSensor.Models
 {
     public class Bmp180 : Reading, IDisposable
     {
-        public Guid _id { get; set; }
         public double pressure { get; set; }
         public double altitude { get; set; }
         public double temp { get; set; }
@@ -42,7 +41,7 @@ namespace HomeSensor.Models
             InitParams();
             reading = new Bmp180()
             {
-                _id = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 ok = 1,
                 msg = "OK",
                 sensor = "pi_sensor_1",
@@ -53,26 +52,7 @@ namespace HomeSensor.Models
                 temp = this.GetTemperature()
             };
         }
-
-        public async Task PostReading(Bmp180 rd)
-        {
-            client = new HttpClient();
-            try
-            {
-                string resourceAddress = "http://192.168.43.49/moosareback/api/Bmp180";
-                //var gg = await client.GetStringAsync(resourceAddress);
-                //Console.WriteLine("plop:  " + gg);
-                string postBody = Common.JsonSerializer(rd);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("error:  " + ex.Message);
-                string error2 = ex.Message;
-            }
-        }
-
+        
         public double GetTemperature()
         {
             byte[] bytes = new byte[] { 0xF4, 0x2E };
