@@ -1,0 +1,22 @@
+﻿<Properties StartupItem="HomeSensor/HomeSensor.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="HomeSensor/Main.cs">
+    <Files>
+      <File FileName="HomeSensor/Main.cs" Line="32" Column="22" />
+      <File FileName="HomeSensor/Models/Mlx906.cs" Line="39" Column="41" />
+      <File FileName="HomeSensor/Common.cs" Line="15" Column="16" />
+      <File FileName="HomeSensor/Models/Sdp610.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/pi/share/HomeSensor/HomeSensor/BMP180.cs" line="64" column="1" />
+      <Breakpoint file="/home/pi/share/HomeSensor/HomeSensor/BMP180.cs" line="70" column="1" />
+      <Breakpoint file="/home/pi/share/HomeSensor/HomeSensor/Models/Sdp610.cs" line="82" column="1" />
+      <Breakpoint file="/home/pi/share/HomeSensor/HomeSensor/Models/Mlx906.cs" line="72" column="1" />
+      <Breakpoint file="/home/pi/share/HomeSensor/HomeSensor/Models/Mlx906.cs" line="32" column="1" />
+      <Breakpoint file="/home/pi/share/HomeSensor/HomeSensor/Models/Mlx906.cs" line="30" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

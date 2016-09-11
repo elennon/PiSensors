@@ -1,0 +1,6 @@
+/home/pi/share/HomeSensor/HomeSensor/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/pi/share/HomeSensor/HomeSensor/bin/Debug/RPi.I2C.Net.dll
+/home/pi/share/HomeSensor/HomeSensor/bin/Debug/HomeSensor.exe.mdb
+/home/pi/share/HomeSensor/HomeSensor/bin/Debug/HomeSensor.exe
+/home/pi/share/HomeSensor/HomeSensor/obj/x86/Debug/HomeSensor.exe
+/home/pi/share/HomeSensor/HomeSensor/obj/x86/Debug/HomeSensor.exe.mdb

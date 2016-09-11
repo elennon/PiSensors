@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeSensor", "HomeSensor\HomeSensor.csproj", "{DA262E9D-44A3-4F27-A7F7-5C23BC2F759A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA262E9D-44A3-4F27-A7F7-5C23BC2F759A}.Debug|x86.ActiveCfg = Debug|x86
+		{DA262E9D-44A3-4F27-A7F7-5C23BC2F759A}.Debug|x86.Build.0 = Debug|x86
+		{DA262E9D-44A3-4F27-A7F7-5C23BC2F759A}.Release|x86.ActiveCfg = Release|x86
+		{DA262E9D-44A3-4F27-A7F7-5C23BC2F759A}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = HomeSensor\HomeSensor.csproj
+	EndGlobalSection
+EndGlobal

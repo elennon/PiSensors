@@ -1,0 +1,1 @@
+\\RASPBERRYPI\PiShare\HomeSensor\HomeSensor\obj\x86\Debug\HomeSensor.exe

@@ -1,0 +1,11 @@
+
+
+	gcc MLXi2c.c -o eye2c -l bcm2835
+
+	gcc -c -fPIC MLXi2c.c -o eye2c.o -l bcm2835 && gcc eye2c.o -shared -o libmlx.so && sudo cp /home/pi/src2/libmlx.so /usr/lib/libmlx.so
+
+	int argc, char **argv
+
+	gcc -c -fPIC MLXi2c.c -o eye2c.o -l bcm2835 && gcc eye2c.o -shared -o libmlx.so && sudo cp /home/pi/src2/libmlx.so /usr/lib/libmlx.so
+
+	gcc -c -fPIC MLXi2c.c -o mlx.o && gcc mlx.o -shared -o libmlx2.so && sudo cp /home/pi/src2/libmlx2.so /usr/lib/libmlx2.so
