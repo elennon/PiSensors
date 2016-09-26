@@ -9,11 +9,10 @@ namespace HomeSensor.Models
 	public class Reading
     {
         public Guid Id { get; set; }
-        public int ok { get; set; }
-        public string msg { get; set; }
-        public string sensor { get; set; }
-        public string ip { get; set; }
-        public DateTime time { get; set; }
-        public DateTime createdAt { get; set; }
+        public bool Ok { get; set; }
+        public string Message { get; set; }
+        public string Sensor { get; set; }
+        public string Ip { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

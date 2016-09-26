@@ -17,13 +17,13 @@ namespace HomeSensor
 			client = new HttpClient();
 			try
 			{
-				string resourceAddress = "http://192.168.43.49/moosareback/api/" + url;
+				string resourceAddress = "http://192.168.43.167/moosareback/api/" + url;
 				//var gg = await client.GetStringAsync(resourceAddress);
-				//Console.WriteLine("plop:  " + gg);
+				//Console.WriteLine("tester:  " + gg);
 				string postBody = Common.JsonSerializer(rd);
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
-				//Console.WriteLine("response:  " + response);
+				Console.WriteLine("response:  " + response);
 			}
 			catch (Exception ex)
 			{

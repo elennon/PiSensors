@@ -29,26 +29,22 @@ namespace HomeSensor.Models
 
 	public class CavityTemp : Reading
 	{
-		public DateTime _time { get; set; }
-		public double val { get; set; }
+		public double Val { get; set; }
 
         public CavityTemp()
         {
-            Id = Guid.NewGuid();
-			ok = 1;
-            msg = "OK";
-            sensor = "cavity_temp";
-            ip = "pi_sensor_1";
-            time = DateTime.Now;
-            createdAt = DateTime.Now;
+            this.Id = Guid.NewGuid();
+			this.Sensor = "pi_sensor_1";
+			this.Ip = "cavity_temp";           
             GetCavityTemp();
+			this.Ok = true;
         }
 
 		public void GetCavityTemp()
 		{
 			try {				
 				ProcessStartInfo start = new ProcessStartInfo();
-				start.FileName = "php"; //"/etc/php5/cli/php.ini";
+				start.FileName = "php"; 
 				start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/cavityTemp.php";
 				start.UseShellExecute = false;
 				start.RedirectStandardOutput = true;
@@ -61,8 +57,8 @@ namespace HomeSensor.Models
 						while ((line = reader.ReadLine ()) != null) 
 						{							
 							cpReading rd = JsonConvert.DeserializeObject<cpReading>(line);
-							this.time = new DateTime (rd.time * 1000);
-							this.val = rd.data;
+							this.CreatedAt = new DateTime (rd.time * 1000);
+							this.Val = rd.data;
 						}
 					}
 				}

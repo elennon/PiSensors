@@ -17,21 +17,21 @@ class Programer
 		private static bool run = true;
 		static BackgroundWorker _bw = new BackgroundWorker();
 		public static List<double> sdpReadings = new List<double> ();
-		private static object lck = new object();
+		private static object threadLock = new object();
 		private static Sdp610 sdp = new Sdp610 ();
 
         static void Main(string[] args)
         {     
-			_bw.DoWork += bw_DoWork;
-			_bw.RunWorkerAsync (sdp);
+			//_bw.DoWork += bw_DoWork;
+			//_bw.RunWorkerAsync (sdp);
             while(run)
 			{    
-				System.Threading.Thread.Sleep(30000);
+				System.Threading.Thread.Sleep(6000);
 				try {
-                    GetMlx906().Wait();
-                    GetCavityTemp().Wait();
-                    GetSdp610().Wait();
-                    GetSht15().Wait();
+                    //GetMlx906().Wait();
+                    //GetCavityTemp().Wait();
+                    //GetSdp610().Wait();
+                    //GetSht15().Wait();
                     GetBMP180().Wait();
                 } catch (Exception ex) {
 					string h = ex.Message;
@@ -44,7 +44,7 @@ class Programer
 			while (run) { 
 				double dbl = ((Sdp610)(e.Argument)).GetSdp610 ();
 				sdpReadings.Add (dbl);
-				System.Threading.Thread.Sleep(8000);
+				System.Threading.Thread.Sleep(1000);
 			}
 		}
 
@@ -58,12 +58,12 @@ class Programer
 		{
 			Sdp610 sdp = new Sdp610 (); 			
 			double _val;
-			lock (lck) {
+			lock (threadLock) {
 				_val = sdpReadings.Average ();
 				sdpReadings.Clear ();
 			}
-			sdp.val = _val;
-			sdp._time = DateTime.Now;
+			sdp.Val = _val;
+			sdp.CreatedAt = DateTime.Now;
             await Common.PostReading(sdp, "sdp610");
         }
 
@@ -71,11 +71,12 @@ class Programer
         {
             Mlx906 mlx = new Mlx906();
             await Common.PostReading(mlx, "MLX906");
+			Console.WriteLine(mlx.AmbiTemp.ToString() + " : " + mlx.SkyTemp.ToString());
         }
 
         private static async Task GetCavityTemp()
         {
-            CavityTemp ct = new CavityTemp();
+            var ct = new CavityTemp();
             await Common.PostReading(ct, "cavitytemps");
         }
 

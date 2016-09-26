@@ -13,20 +13,18 @@ namespace HomeSensor.Models
 {
     public class Sht15 : Reading
     {
-        public Guid _id { get; set; }
-        public double temp { get; set; }
-        public double rh { get; set; }
-        public double dew { get; set; }
+        public double Temp { get; set; }
+        public double Rh { get; set; }
+        public double Dew { get; set; }
 
         public Sht15()
         {
-            _id = Guid.NewGuid();
-            ok = 1;
-            msg = "OK";
-            sensor = "pi_sensor_1";
-            ip = "sht15";
-            time = DateTime.Now;
-            createdAt = DateTime.Now;
+			this.Id = Guid.NewGuid ();
+            this.Sensor = "pi_sensor_1";
+            this.Ip = "sht15";
+            this.CreatedAt = DateTime.Now;
+			GetSht15 ();
+			this.Ok = true;
         }
 
         public void GetSht15()
@@ -46,13 +44,13 @@ namespace HomeSensor.Models
                         switch (line.Split(':')[0])
                         {
                             case "rh":
-                                this.rh = Convert.ToDouble(line.Split(':')[1]);
+                                this.Rh = Convert.ToDouble(line.Split(':')[1]);
                                 break;
                             case "temperature":
-                                this.temp = Convert.ToDouble(line.Split(':')[1]);
+                                this.Temp = Convert.ToDouble(line.Split(':')[1]);
                                 break;
                             case "dew_point":
-                                this.dew = Convert.ToDouble(line.Split(':')[1]);
+                                this.Dew = Convert.ToDouble(line.Split(':')[1]);
                                 break;
                         }
                     }

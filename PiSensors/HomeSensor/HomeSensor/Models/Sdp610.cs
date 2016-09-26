@@ -13,31 +13,27 @@ namespace HomeSensor.Models
 {
 	public class Sdp610 : Reading
 	{
-		public Guid _id { get; set; }
-		public DateTime _time { get; set; }
-		public double val { get; set; }
+		public double Val { get; set; }
 
         public Sdp610()
         {
-            _id = Guid.NewGuid();
-            ok = 1;
-            msg = "OK";
-            sensor = "pi_sensor_1";
-            ip = "sdp610";
-            time = DateTime.Now;
-            createdAt = DateTime.Now;
+			this.Id = Guid.NewGuid ();
+            this.Sensor = "pi_sensor_1";
+            this.Ip = "sdp610";
+            this.CreatedAt = DateTime.Now;		
+			this.Ok = true;
         }
 
 		public double GetSdp610()
 		{
+			double value = 0;
 			try {				
 				ProcessStartInfo start = new ProcessStartInfo();
-				start.FileName = "php"; //"/etc/php5/cli/php.ini";
+				start.FileName = "php"; 
 				start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/sdp.php";
 				start.UseShellExecute = false;
 				start.RedirectStandardOutput = true;
 				string line = "";
-				double val = 0;
 				using (Process process = Process.Start(start))
 				{
 					using (StreamReader reader = process.StandardOutput) 
@@ -54,8 +50,7 @@ namespace HomeSensor.Models
 								}
 							}							
 							else {
-								val = Convert.ToDouble (line);
-								return val;
+								value = Convert.ToDouble (line);
 							}
 							first = false;
 						}
@@ -67,7 +62,7 @@ namespace HomeSensor.Models
 				Console.WriteLine("Sdp610 error:  " + ex.Message);
 				string error2 = ex.Message;
 			}
-			return val;
+			return value;
 		}
 	}
 }

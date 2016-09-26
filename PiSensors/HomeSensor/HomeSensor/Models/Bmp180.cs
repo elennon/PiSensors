@@ -12,15 +12,14 @@ namespace HomeSensor.Models
 {
     public class Bmp180 : Reading, IDisposable
     {
-        public double pressure { get; set; }
-        public double altitude { get; set; }
-        public double temp { get; set; }
+        public double Pressure { get; set; }
+        public double Altitude { get; set; }
+        public double Temp { get; set; }
         private I2CBus bus;
         private short AC1, AC2, AC3, B1, B2, MB, MC, MD;
         private ushort AC4, AC5, AC6;
         private int deviceID = 0x77;
-        public Bmp180 reading;
-
+        
 		public Bmp180 ()
 		{
 		}
@@ -35,18 +34,13 @@ namespace HomeSensor.Models
                 Environment.Exit(0);
             }
             InitParams();
-            reading = new Bmp180()
-            {
-                Id = Guid.NewGuid(),
-                ok = 1,
-                msg = "OK",
-                sensor = "pi_sensor_1",
-                ip = "666",
-                time = DateTime.Now,
-                createdAt = DateTime.Now,
-                pressure = this.GetPressure(),
-                temp = this.GetTemperature()
-            };
+			this.Id = Guid.NewGuid ();
+			this.Sensor = "pi_sensor_1";
+			this.Ip = "bmp180";
+			this.CreatedAt = DateTime.Now;
+			this.Pressure = this.GetPressure();
+			this.Temp = this.GetTemperature();
+			this.Ok = true;
         }
         
         public double GetTemperature()

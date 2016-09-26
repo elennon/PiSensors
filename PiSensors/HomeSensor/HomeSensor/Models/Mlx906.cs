@@ -14,22 +14,20 @@ namespace HomeSensor.Models
 {
     public class Mlx906 : Reading
     {
-        public double ambiTemp { get; set; }
-        public double skyTemp { get; set; }
+        public double AmbiTemp { get; set; }
+        public double SkyTemp { get; set; }
 
         public Mlx906()
         {
             string reading = GetMlx906();
             if(!string.IsNullOrEmpty(reading))
             {
-                Id = Guid.NewGuid();
-                ok = 1;
-                msg = "OK";
-                sensor = "pi_sensor_MLX906";
-                ip = "906";
-                time = DateTime.Now;
-                this.ambiTemp = Convert.ToDouble(reading.Split(',')[0]);
-                this.skyTemp = Convert.ToDouble(reading.Split(',')[1]);
+                this.Id = Guid.NewGuid();
+                this.Sensor = "pi_sensor_1";
+				this.Ip = "MLX906";           
+				this.CreatedAt = DateTime.Now.ToUniversalTime();
+                this.AmbiTemp = Convert.ToDouble(reading.Split(',')[0]);
+                this.SkyTemp = Convert.ToDouble(reading.Split(',')[1]);
             }
         }
 		
@@ -39,7 +37,7 @@ namespace HomeSensor.Models
             try
             {
                 ProcessStartInfo start = new ProcessStartInfo();
-				start.FileName = "sh"; //"/etc/php5/cli/php.ini";
+				start.FileName = "sh";
 				start.Arguments = string.Format("-c \"sudo {0}\"", "/home/pi/PiSensors/PiSensors/src/eye2c");// "/home/pi/src2/eye2c";
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
