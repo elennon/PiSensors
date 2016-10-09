@@ -22,17 +22,17 @@ class Programer
 
         static void Main(string[] args)
         {     
-			//_bw.DoWork += bw_DoWork;
-			//_bw.RunWorkerAsync (sdp);
+			_bw.DoWork += bw_DoWork;
+			_bw.RunWorkerAsync (sdp);
             while(run)
 			{    
-				System.Threading.Thread.Sleep(6000);
+				System.Threading.Thread.Sleep(10000);
 				try {
                     //GetMlx906().Wait();
                     //GetCavityTemp().Wait();
-                    //GetSdp610().Wait();
-                    //GetSht15().Wait();
-                    GetBMP180().Wait();
+                    ////GetSdp610().Wait();
+                    GetSht15().Wait();
+					//GetBMP180().Wait();
                 } catch (Exception ex) {
 					string h = ex.Message;
 				}					
@@ -77,7 +77,7 @@ class Programer
         private static async Task GetCavityTemp()
         {
             var ct = new CavityTemp();
-            await Common.PostReading(ct, "cavitytemps");
+            await Common.PostReading(ct, "cavityTemp");
         }
 
         private static async Task GetBMP180()

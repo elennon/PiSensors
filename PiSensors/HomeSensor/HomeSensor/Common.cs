@@ -17,7 +17,7 @@ namespace HomeSensor
 			client = new HttpClient();
 			try
 			{
-				string resourceAddress = "http://192.168.43.167/moosareback/api/" + url;
+				string resourceAddress = "http://139.59.172.240:3000/api/" + url;	// "http://192.168.43.167/moosareback/api/" + url;
 				//var gg = await client.GetStringAsync(resourceAddress);
 				//Console.WriteLine("tester:  " + gg);
 				string postBody = Common.JsonSerializer(rd);
