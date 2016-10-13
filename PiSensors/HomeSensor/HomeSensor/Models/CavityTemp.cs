@@ -13,19 +13,53 @@ using System.Runtime.Serialization;
 namespace HomeSensor.Models
 {
 	[DataContract]
-	public class cpReading
+	public static class cpReading
 	{
 		[DataMember]
-		public int ok { get; set; }
+		public static int ok { get; set; }
 		[DataMember]
-		public string msg { get; set; }
+		public static string msg { get; set; }
 		[DataMember]
-		public string sensor { get; set; }
+		public static string sensor { get; set; }
 		[DataMember]
-		public double data { get; set; }
+		public static double data { get; set; }
 		[DataMember]
-		public long time { get; set; }
-	}
+		public static long time { get; set; }
+
+
+        public static List<CavityTemp> GetCavityTemp()
+        {
+            List<CavityTemp> lst = new List<CavityTemp>();
+            try
+            {
+                ProcessStartInfo start = new ProcessStartInfo();
+                start.FileName = "php";
+                start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/cavityTemp.php";
+                start.UseShellExecute = false;
+                start.RedirectStandardOutput = true;
+                string line = "";
+
+                using (Process process = Process.Start(start))
+                {
+                    using (StreamReader reader = process.StandardOutput)
+                    {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            //cpReading rd = JsonConvert.DeserializeObject<cpReading>(line);
+                            //this.CreatedAt = new DateTime(rd.time * 1000);
+                            //this.Val = rd.data;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("cavity temp error:  " + ex.Message);
+                string error2 = ex.Message;
+            }
+            return lst;
+        }
+    }
 
 	public class CavityTemp : Reading
 	{
@@ -34,40 +68,11 @@ namespace HomeSensor.Models
         public CavityTemp()
         {
             this.Id = Guid.NewGuid();
-			this.Sensor = "pi_sensor_1";
+			//this.Sensor = "pi_sensor_1";
 			this.Ip = "cavity_temp";           
-            GetCavityTemp();
-			this.Ok = true;
+            this.CreatedAt = DateTime.Now.ToUniversalTime();
+            this.Ok = true;
         }
 
-		public void GetCavityTemp()
-		{
-			try {				
-				ProcessStartInfo start = new ProcessStartInfo();
-				start.FileName = "php"; 
-				start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/cavityTemp.php";
-				start.UseShellExecute = false;
-				start.RedirectStandardOutput = true;
-				string line = "";
-				
-				using (Process process = Process.Start(start))
-				{
-					using (StreamReader reader = process.StandardOutput) 
-					{
-						while ((line = reader.ReadLine ()) != null) 
-						{							
-							cpReading rd = JsonConvert.DeserializeObject<cpReading>(line);
-							this.CreatedAt = new DateTime (rd.time * 1000);
-							this.Val = rd.data;
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("cavity temp error:  " + ex.Message);
-				string error2 = ex.Message;
-			}
-		}
 	}
 }

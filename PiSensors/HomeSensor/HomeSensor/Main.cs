@@ -30,9 +30,10 @@ class Programer
 				try {
                     //GetMlx906().Wait();
                     //GetCavityTemp().Wait();
-                    ////GetSdp610().Wait();
-                    GetSht15().Wait();
-					//GetBMP180().Wait();
+                    //GetSdp610().Wait();
+                    //GetSht15().Wait();
+                    GetBMP180().Wait();
+                    GetHflux().Wait();
                 } catch (Exception ex) {
 					string h = ex.Message;
 				}					
@@ -47,6 +48,12 @@ class Programer
 				System.Threading.Thread.Sleep(1000);
 			}
 		}
+
+        private static async Task GetHflux()
+        {
+            Hflux hflx = new Hflux();
+            await Common.PostReading(hflx, "Hflux");
+        }
 
         private static async Task GetSht15()
         {
