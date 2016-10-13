@@ -33,21 +33,21 @@ namespace HomeSensor.Models
             try
             {
                 ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = "php";
-                start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/cavityTemp.php";
+				start.FileName = "/usr/bin/python";
+                start.Arguments = "/home/pi/PiSensors/PiSensors/python/getcps.py";
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
                 string line = "";
-
                 using (Process process = Process.Start(start))
                 {
                     using (StreamReader reader = process.StandardOutput)
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            //cpReading rd = JsonConvert.DeserializeObject<cpReading>(line);
-                            //this.CreatedAt = new DateTime(rd.time * 1000);
-                            //this.Val = rd.data;
+							var ct = new CavityTemp();
+							ct.Sensor = line.Split(',')[0];
+							ct.Val = Convert.ToDouble(line.Split(',')[1]);
+							lst.Add(ct);
                         }
                     }
                 }

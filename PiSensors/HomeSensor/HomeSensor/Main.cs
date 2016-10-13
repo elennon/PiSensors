@@ -29,11 +29,11 @@ class Programer
 				System.Threading.Thread.Sleep(10000);
 				try {
                     //GetMlx906().Wait();
-                    //GetCavityTemp().Wait();
+                    GetCavityTemp().Wait();
                     //GetSdp610().Wait();
                     //GetSht15().Wait();
-                    GetBMP180().Wait();
-                    GetHflux().Wait();
+                    //GetBMP180().Wait();
+                    //GetHflux().Wait();
                 } catch (Exception ex) {
 					string h = ex.Message;
 				}					
@@ -83,8 +83,10 @@ class Programer
 
         private static async Task GetCavityTemp()
         {
-            var ct = new CavityTemp();
-            await Common.PostReading(ct, "cavityTemp");
+			var cts = cpReading.GetCavityTemp ();
+			foreach (var item in cts) {
+				await Common.PostReading (item, "cavityTemp");
+			}          
         }
 
         private static async Task GetBMP180()

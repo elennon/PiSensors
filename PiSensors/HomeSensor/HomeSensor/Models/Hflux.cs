@@ -14,10 +14,11 @@ namespace HomeSensor.Models
             this.Sensor = "pi_sensor_1";
             this.Ip = "hflux";
             this.CreatedAt = DateTime.Now;
+			this.Val = GetHflux ();
             this.Ok = true;
         }
 
-        public double GetSdp610()
+        private double GetHflux()
         {
             double value = 0;
             try
