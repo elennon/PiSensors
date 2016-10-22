@@ -33,21 +33,21 @@ namespace HomeSensor.Models
             try
             {
                 ProcessStartInfo start = new ProcessStartInfo();
-				start.FileName = "/usr/bin/python";
-                start.Arguments = "/home/pi/PiSensors/PiSensors/python/getcps.py";
+                start.FileName = "php";
+                start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/cavityTemp.php";
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
                 string line = "";
+
                 using (Process process = Process.Start(start))
                 {
                     using (StreamReader reader = process.StandardOutput)
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-							var ct = new CavityTemp();
-							ct.Sensor = line.Split(',')[0];
-							ct.Val = Convert.ToDouble(line.Split(',')[1]);
-							lst.Add(ct);
+                            //cpReading rd = JsonConvert.DeserializeObject<cpReading>(line);
+                            //this.CreatedAt = new DateTime(rd.time * 1000);
+                            //this.Val = rd.data;
                         }
                     }
                 }
@@ -55,7 +55,7 @@ namespace HomeSensor.Models
             catch (Exception ex)
             {
                 Console.WriteLine("cavity temp error:  " + ex.Message);
-                string error2 = ex.Message;
+                Common.Logger(ex.Message);
             }
             return lst;
         }

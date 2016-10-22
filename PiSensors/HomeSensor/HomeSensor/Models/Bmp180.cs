@@ -26,21 +26,29 @@ namespace HomeSensor.Models
 
         public Bmp180(string _busName)
         {
-            bus = RPi.I2C.Net.I2CBus.Open(_busName);
-            if (!Detect())
-            {
-                Console.WriteLine("Some error occurred during communication with the sensor. Please check the sensor.");
-                Console.ReadLine();
-                Environment.Exit(0);
+            try
+            {            
+                bus = RPi.I2C.Net.I2CBus.Open(_busName);
+                if (!Detect())
+                {
+                    Console.WriteLine("Some error occurred during communication with the sensor. Please check the sensor.");
+                    Console.ReadLine();
+                    Environment.Exit(0);
+                }
+                InitParams();
+			    this.Id = Guid.NewGuid ();
+			    this.Sensor = "pi_sensor_1";
+			    this.Ip = "bmp180";
+			    this.CreatedAt = DateTime.Now;
+			    this.Pressure = this.GetPressure();
+			    this.Temp = this.GetTemperature();
+			    this.Ok = true;
             }
-            InitParams();
-			this.Id = Guid.NewGuid ();
-			this.Sensor = "pi_sensor_1";
-			this.Ip = "bmp180";
-			this.CreatedAt = DateTime.Now;
-			this.Pressure = this.GetPressure();
-			this.Temp = this.GetTemperature();
-			this.Ok = true;
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetBmp180 error:  " + ex.Message);
+                Common.Logger(ex.Message);
+            }
         }
         
         public double GetTemperature()

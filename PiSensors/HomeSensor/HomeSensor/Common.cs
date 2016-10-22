@@ -18,8 +18,6 @@ namespace HomeSensor
 			try
 			{
 				string resourceAddress = "http://139.59.172.240:3000/api/" + url;	// "http://192.168.43.167/moosareback/api/" + url;
-				//var gg = await client.GetStringAsync(resourceAddress);
-				//Console.WriteLine("tester:  " + gg);
 				string postBody = Common.JsonSerializer(rd);
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
@@ -28,12 +26,17 @@ namespace HomeSensor
 			catch (Exception ex)
 			{
 				Console.WriteLine("Post error:  " + ex.Message);
-				string error2 = ex.Message;
+                Logger(ex.Message);
+                return;
 			}
 		}
 
+        public static void Logger(string message)
+        {
+            File.AppendAllText(@"/home/pi/sensors_log.txt", message + Environment.NewLine);
+        }
 
-		public static string JsonSerializer(object objectToSerialize)
+        public static string JsonSerializer(object objectToSerialize)
 		{
 			if (objectToSerialize == null)
 			{
@@ -58,5 +61,6 @@ namespace HomeSensor
 			}
 		}
 	}
+
 }
 

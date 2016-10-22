@@ -60,8 +60,8 @@ namespace HomeSensor.Models
 			catch (Exception ex)
 			{
 				Console.WriteLine("Sdp610 error:  " + ex.Message);
-				string error2 = ex.Message;
-			}
+                Common.Logger(ex.Message);
+            }
 			return value;
 		}
 	}

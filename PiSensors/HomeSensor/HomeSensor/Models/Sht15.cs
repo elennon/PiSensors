@@ -19,12 +19,20 @@ namespace HomeSensor.Models
 
         public Sht15()
         {
-			this.Id = Guid.NewGuid ();
-            this.Sensor = "pi_sensor_1";
-            this.Ip = "sht15";
-            this.CreatedAt = DateTime.Now;
-			GetSht15 ();
-			this.Ok = true;
+            try
+            {
+			    this.Id = Guid.NewGuid ();
+                this.Sensor = "pi_sensor_1";
+                this.Ip = "sht15";
+                this.CreatedAt = DateTime.Now;
+			    GetSht15 ();
+			    this.Ok = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetSht15 error:  " + ex.Message);
+                Common.Logger(ex.Message);
+            }
         }
 
         public void GetSht15()

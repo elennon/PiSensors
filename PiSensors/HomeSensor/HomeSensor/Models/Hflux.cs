@@ -14,11 +14,10 @@ namespace HomeSensor.Models
             this.Sensor = "pi_sensor_1";
             this.Ip = "hflux";
             this.CreatedAt = DateTime.Now;
-			this.Val = GetHflux ();
             this.Ok = true;
         }
 
-        private double GetHflux()
+        public double GetSdp610()
         {
             double value = 0;
             try
@@ -50,7 +49,7 @@ namespace HomeSensor.Models
             catch (Exception ex)
             {
                 Console.WriteLine("Hflux error:  " + ex.Message);
-                string error2 = ex.Message;
+                Common.Logger(ex.Message);
             }
             return value;
         }

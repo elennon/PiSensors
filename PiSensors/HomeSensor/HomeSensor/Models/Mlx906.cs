@@ -50,7 +50,7 @@ namespace HomeSensor.Models
             catch (Exception ex)
             {
                 Console.WriteLine("GetMlx906 error:  " + ex.Message);
-                string error2 = ex.Message;
+                Common.Logger(ex.Message);
             }
             return line;
         }
