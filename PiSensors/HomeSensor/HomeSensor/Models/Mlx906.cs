@@ -28,6 +28,7 @@ namespace HomeSensor.Models
 				this.CreatedAt = DateTimeOffset.Now;
                 this.AmbiTemp = Convert.ToDouble(reading.Split(',')[0]);
                 this.SkyTemp = Convert.ToDouble(reading.Split(',')[1]);
+				this.Ok = string.IsNullOrEmpty(reading) ? false : true;
             }
         }
 		

@@ -11,6 +11,8 @@ using System.Net.Cache;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using HomeSensor.Models;
+using System.Linq;
+using System.Diagnostics;
 
 namespace HomeSensor
 {
@@ -102,6 +104,36 @@ namespace HomeSensor
 				DataContractJsonSerializer deserializer = new DataContractJsonSerializer(instance.GetType());
 				return (T)deserializer.ReadObject(ms);
 			}
+		}
+			
+		public static string GetSerialNumber()
+		{
+			string line = "", result = "";
+			try
+			{
+				ProcessStartInfo start = new ProcessStartInfo();
+				start.FileName = "/bin/bash";
+				//start.Arguments = "cat /proc/cpuinfo | grep Serial";
+				start.Arguments = string.Format("-c \"sudo {0}\"", "cat /proc/cpuinfo | grep Serial");
+				start.UseShellExecute = false;
+				start.RedirectStandardOutput = true;
+				using (Process process = Process.Start(start))
+				{
+					using (StreamReader reader = process.StandardOutput)
+					{
+						while ((line = reader.ReadLine ()) != null) 
+						{
+							result = line;
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("get serial number error:  " + ex.Message);
+				Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString());
+			}
+			return result;
 		}
 	}
 

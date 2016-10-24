@@ -7,6 +7,7 @@ namespace HomeSensor.Models
     public class Hflux : Reading
     {
         public double Val { get; set; }
+		private bool _ok = false;
 
         public Hflux()
         {
@@ -14,7 +15,7 @@ namespace HomeSensor.Models
             this.Sensor = "pi_sensor_1";
             this.Ip = "hflux";
             this.CreatedAt = DateTimeOffset.Now;
-            this.Ok = true;
+            this.Ok = _ok;
         }
 
         public double GetHflux()
@@ -51,6 +52,7 @@ namespace HomeSensor.Models
                 Console.WriteLine("Hflux error:  " + ex.Message);
                 Common.Logger(ex.Message);
             }
+			_ok = true;
             return value;
         }
     }

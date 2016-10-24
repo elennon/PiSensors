@@ -22,8 +22,9 @@ class Programer
 
         static void Main(string[] args)
         {     
-			//_bw.DoWork += bw_DoWork;
-			//_bw.RunWorkerAsync (sdp);
+			var rpiSerial = Common.GetSerialNumber();
+			_bw.DoWork += bw_DoWork;
+			_bw.RunWorkerAsync (sdp);
             while(run)
 			{    
 				System.Threading.Thread.Sleep(10000);
@@ -71,6 +72,7 @@ class Programer
 				sdpReadings.Clear ();
 			}
 			sdp.Val = _val;
+			sdp.Ok = _val != null ? true : false;
 			sdp.CreatedAt = DateTime.Now;
             await Common.PostReading(sdp, "sdp610");
         }

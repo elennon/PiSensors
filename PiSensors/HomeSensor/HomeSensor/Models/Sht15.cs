@@ -16,6 +16,7 @@ namespace HomeSensor.Models
         public double Temp { get; set; }
         public double Rh { get; set; }
         public double Dew { get; set; }
+		private bool _ok = false;
 
         public Sht15()
         {
@@ -26,7 +27,7 @@ namespace HomeSensor.Models
                 this.Ip = "sht15";
 				this.CreatedAt = DateTimeOffset.Now;
 			    GetSht15 ();
-			    this.Ok = true;
+			    this.Ok = _ok;
             }
             catch (Exception ex)
             {
@@ -61,6 +62,7 @@ namespace HomeSensor.Models
                                 this.Dew = Convert.ToDouble(line.Split(':')[1]);
                                 break;
                         }
+						_ok = true;
                     }
                 }
             }
