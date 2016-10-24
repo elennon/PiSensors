@@ -17,7 +17,7 @@ namespace HomeSensor.Models
             this.Ok = true;
         }
 
-        public double GetSdp610()
+        public double GetHflux()
         {
             double value = 0;
             try

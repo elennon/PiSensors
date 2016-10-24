@@ -15,37 +15,27 @@ namespace HomeSensor.Models
 	[DataContract]
 	public static class cpReading
 	{
-		[DataMember]
-		public static int ok { get; set; }
-		[DataMember]
-		public static string msg { get; set; }
-		[DataMember]
-		public static string sensor { get; set; }
-		[DataMember]
-		public static double data { get; set; }
-		[DataMember]
-		public static long time { get; set; }
-
-
         public static List<CavityTemp> GetCavityTemp()
         {
             List<CavityTemp> lst = new List<CavityTemp>();
             try
             {
                 ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = "php";
-                start.Arguments = "/home/pi/PiSensors/PiSensors/sensors_php/cavityTemp.php";
+				start.FileName = "/usr/bin/python";
+                start.Arguments = "/home/pi/PiSensors/PiSensors/python/getcps.py";
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
                 string line = "";
-
                 using (Process process = Process.Start(start))
                 {
                     using (StreamReader reader = process.StandardOutput)
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-							Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
+							var ct = new CavityTemp();
+							ct.Sensor = line.Split(',')[0];
+							ct.Val = Convert.ToDouble(line.Split(',')[1]);
+							lst.Add(ct);
                         }
                     }
                 }
@@ -53,7 +43,7 @@ namespace HomeSensor.Models
             catch (Exception ex)
             {
                 Console.WriteLine("cavity temp error:  " + ex.Message);
-                Common.Logger(ex.Message);
+                Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString());
             }
             return lst;
         }

@@ -1,2 +1,3 @@
 \\RASPBERRYPI\PiShare\HomeSensor\HomeSensor\obj\x86\Debug\HomeSensor.exe
 C:\Users\eddie\Documents\C# Projects\PiSensors\PiSensors\PiSensors\HomeSensor\HomeSensor\obj\x86\Debug\HomeSensor.exe
+C:\Users\eddie\Documents\PiSensors\PiSensors\PiSensors\HomeSensor\HomeSensor\obj\x86\Debug\HomeSensor.exe
