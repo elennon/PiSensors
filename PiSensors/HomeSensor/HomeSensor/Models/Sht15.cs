@@ -24,14 +24,14 @@ namespace HomeSensor.Models
 			    this.Id = Guid.NewGuid ();
                 this.Sensor = "pi_sensor_1";
                 this.Ip = "sht15";
-                this.CreatedAt = DateTime.Now;
+				this.CreatedAt = DateTimeOffset.Now;
 			    GetSht15 ();
 			    this.Ok = true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("GetSht15 error:  " + ex.Message);
-                Common.Logger(ex.Message);
+				Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
             }
         }
 

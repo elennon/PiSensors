@@ -25,7 +25,7 @@ namespace HomeSensor.Models
                 this.Id = Guid.NewGuid();
                 this.Sensor = "pi_sensor_1";
 				this.Ip = "MLX906";           
-				this.CreatedAt = DateTime.Now.ToUniversalTime();
+				this.CreatedAt = DateTimeOffset.Now;
                 this.AmbiTemp = Convert.ToDouble(reading.Split(',')[0]);
                 this.SkyTemp = Convert.ToDouble(reading.Split(',')[1]);
             }
@@ -50,7 +50,7 @@ namespace HomeSensor.Models
             catch (Exception ex)
             {
                 Console.WriteLine("GetMlx906 error:  " + ex.Message);
-                Common.Logger(ex.Message);
+				Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
             }
             return line;
         }

@@ -45,9 +45,7 @@ namespace HomeSensor.Models
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            //cpReading rd = JsonConvert.DeserializeObject<cpReading>(line);
-                            //this.CreatedAt = new DateTime(rd.time * 1000);
-                            //this.Val = rd.data;
+							Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
                         }
                     }
                 }
@@ -70,7 +68,7 @@ namespace HomeSensor.Models
             this.Id = Guid.NewGuid();
 			//this.Sensor = "pi_sensor_1";
 			this.Ip = "cavity_temp";           
-            this.CreatedAt = DateTime.Now.ToUniversalTime();
+			this.CreatedAt = DateTimeOffset.Now;
             this.Ok = true;
         }
 

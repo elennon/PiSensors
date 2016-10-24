@@ -20,7 +20,7 @@ namespace HomeSensor.Models
 			this.Id = Guid.NewGuid ();
             this.Sensor = "pi_sensor_1";
             this.Ip = "sdp610";
-            this.CreatedAt = DateTime.Now;		
+			this.CreatedAt = DateTimeOffset.Now;		
 			this.Ok = true;
         }
 
@@ -60,7 +60,7 @@ namespace HomeSensor.Models
 			catch (Exception ex)
 			{
 				Console.WriteLine("Sdp610 error:  " + ex.Message);
-                Common.Logger(ex.Message);
+				Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
             }
 			return value;
 		}

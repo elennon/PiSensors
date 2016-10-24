@@ -13,6 +13,6 @@ namespace HomeSensor.Models
         public string Message { get; set; }
         public string Sensor { get; set; }
         public string Ip { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }

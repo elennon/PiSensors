@@ -22,8 +22,8 @@ class Programer
 
         static void Main(string[] args)
         {     
-			_bw.DoWork += bw_DoWork;
-			_bw.RunWorkerAsync (sdp);
+			//_bw.DoWork += bw_DoWork;
+			//_bw.RunWorkerAsync (sdp);
             while(run)
 			{    
 				System.Threading.Thread.Sleep(10000);
@@ -35,9 +35,10 @@ class Programer
                     GetBMP180().Wait();
                     GetHflux().Wait();
                 } catch (Exception ex) {
-					string h = ex.Message;
+					Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
 				}					
             }
+			Common.Logger ("Exited while loop...");
 		}
 
 		static void bw_DoWork (object sender, DoWorkEventArgs e)

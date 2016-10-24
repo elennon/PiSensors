@@ -1,0 +1,4 @@
+/home/pi/PiSensors/PiSensors/HomeSensor/HomeSensor/obj/x86/Release/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/pi/PiSensors/PiSensors/HomeSensor/HomeSensor/bin/Release/HomeSensor.exe
+/home/pi/PiSensors/PiSensors/HomeSensor/HomeSensor/obj/x86/Release/HomeSensor.exe
+/home/pi/PiSensors/PiSensors/HomeSensor/HomeSensor/bin/Release/RPi.I2C.Net.dll

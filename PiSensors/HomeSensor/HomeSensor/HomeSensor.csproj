@@ -51,6 +51,8 @@
     <Compile Include="Models\Sdp610.cs" />
     <Compile Include="Models\CavityTemp.cs" />
     <Compile Include="Models\Mlx906.cs" />
+    <Compile Include="Models\Hflux.cs" />
+    <Compile Include="Models\NotSenters.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

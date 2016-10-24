@@ -13,7 +13,7 @@ namespace HomeSensor.Models
             this.Id = Guid.NewGuid();
             this.Sensor = "pi_sensor_1";
             this.Ip = "hflux";
-            this.CreatedAt = DateTime.Now;
+            this.CreatedAt = DateTimeOffset.Now;
             this.Ok = true;
         }
 

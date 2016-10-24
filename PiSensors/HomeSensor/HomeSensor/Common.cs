@@ -34,20 +34,20 @@ namespace HomeSensor
                     {
                         foreach (var item in notSenters)
                         {
-                            await client.PostAsync(item.url, new StringContent(item.body, Encoding.UTF8, "application/json"));
+                            await client.PostAsync(item.Url, new StringContent(item.Body, Encoding.UTF8, "application/json"));
                         }
                         notSenters.Clear();
                     }
                 }
                 else
                 {
-                    notSenters.Add(new NotSenters { body = postBody, url = resourceAddress });
+                    notSenters.Add(new NotSenters { Body = postBody, Url = resourceAddress });
                 }
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine("Post error:  " + ex.Message);
-                Logger(ex.Message);
+				Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
 			}
 		}
 
