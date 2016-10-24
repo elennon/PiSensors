@@ -9,22 +9,40 @@ using System.Net.Http.Headers;
 using System.Net;
 using System.Net.Cache;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using HomeSensor.Models;
 
 namespace HomeSensor
 {
 	public static class Common
 	{
+        private static List<NotSenters> notSenters = new List<NotSenters>();
 		private static HttpClient client = new HttpClient();
 		public static async Task PostReading(object rd, string url)
 		{
 			client = new HttpClient();
 			try
 			{
-				string resourceAddress = "http://139.59.172.240:3000/api/" + url;	// "http://192.168.43.167/moosareback/api/" + url;
-				string postBody = Common.JsonSerializer(rd);
-				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
-				Console.WriteLine("response:  " + response);
+                string resourceAddress = "http://139.59.172.240:3000/api/" + url;   // "http://192.168.43.167/moosareback/api/" + url;
+                string postBody = Common.JsonSerializer(rd);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                {            
+                    var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
+                    Console.WriteLine("response:  " + response + GetNistTime().ToLongTimeString());
+                    if(notSenters.Count > 0)
+                    {
+                        foreach (var item in notSenters)
+                        {
+                            await client.PostAsync(item.url, new StringContent(item.body, Encoding.UTF8, "application/json"));
+                        }
+                        notSenters.Clear();
+                    }
+                }
+                else
+                {
+                    notSenters.Add(new NotSenters { body = postBody, url = resourceAddress });
+                }
 			}
 			catch (Exception ex)
 			{
