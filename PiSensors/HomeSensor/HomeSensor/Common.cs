@@ -31,7 +31,7 @@ namespace HomeSensor
                 if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                 {            
                     var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
-                    Console.WriteLine("response:  " + response + GetNistTime().ToLongTimeString());
+                    Console.WriteLine("response:  " + response.ReasonPhrase + "   @"+ GetNistTime().ToLongTimeString());
                     if(notSenters.Count > 0)
                     {
                         foreach (var item in notSenters)
@@ -78,8 +78,21 @@ namespace HomeSensor
 
         public static void Logger(string message)
         {
-            File.AppendAllText(@"/home/pi/sensors_log.txt", message + Environment.NewLine);
+			using (StreamWriter w = File.AppendText(@"/home/pi/sensors_log.txt"))
+			{
+				Log(message, w);
+			}
+            //File.AppendAllText(@"/home/pi/sensors_log.txt", message + Environment.NewLine);
         }
+
+		public static void Log(string logMessage, TextWriter w)
+		{
+			w.Write("\r\nLog Entry : ");
+			w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());				
+			w.WriteLine("  :");
+			w.WriteLine("  :{0}", logMessage);
+			w.WriteLine ("-------------------------------");
+		}
 
         public static string JsonSerializer(object objectToSerialize)
 		{

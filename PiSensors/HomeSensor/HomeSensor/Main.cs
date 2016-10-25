@@ -23,11 +23,11 @@ class Programer
         static void Main(string[] args)
         {     
 			var rpiSerial = Common.GetSerialNumber();
-			_bw.DoWork += bw_DoWork;
-			_bw.RunWorkerAsync (sdp);
+			//_bw.DoWork += bw_DoWork;
+			//_bw.RunWorkerAsync (sdp);
             while(run)
 			{    
-				System.Threading.Thread.Sleep(10000);
+				System.Threading.Thread.Sleep(1000);
 				try {
                     //GetMlx906().Wait();
                     //GetCavityTemp().Wait();
