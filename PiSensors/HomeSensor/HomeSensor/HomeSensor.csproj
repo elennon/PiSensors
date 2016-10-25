@@ -47,6 +47,7 @@
     <Compile Include="Common.cs" />
     <Compile Include="Models\Bmp180.cs" />
     <Compile Include="Models\Reading.cs" />
+    <Compile Include="Models\Sensor.cs" />
     <Compile Include="Models\Sht15.cs" />
     <Compile Include="Models\Sdp610.cs" />
     <Compile Include="Models\CavityTemp.cs" />
@@ -54,6 +55,8 @@
     <Compile Include="Models\Hflux.cs" />
     <Compile Include="Models\NotSenters.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="globalVar.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
 </Project>

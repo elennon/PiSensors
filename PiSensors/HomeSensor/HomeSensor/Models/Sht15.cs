@@ -23,7 +23,7 @@ namespace HomeSensor.Models
             try
             {
 			    this.Id = Guid.NewGuid ();
-                this.Sensor = "pi_sensor_1";
+                this.Sensor = Globals.SerialNumber;
                 this.Ip = "sht15";
 				this.CreatedAt = DateTimeOffset.Now;
 			    GetSht15 ();

@@ -19,10 +19,11 @@ class Programer
 		public static List<double> sdpReadings = new List<double> ();
 		private static object threadLock = new object();
 		private static Sdp610 sdp = new Sdp610 ();
-
+        
         static void Main(string[] args)
-        {     
-			var rpiSerial = Common.GetSerialNumber();
+        {
+            Common.CheckSensor().Wait();
+            
 			//_bw.DoWork += bw_DoWork;
 			//_bw.RunWorkerAsync (sdp);
             while(run)

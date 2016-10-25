@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using HomeSensor.Models;
 using System.Linq;
 using System.Diagnostics;
+using System.Xml;
 
 namespace HomeSensor
 {
@@ -20,6 +21,7 @@ namespace HomeSensor
 	{
         private static List<NotSenters> notSenters = new List<NotSenters>();
 		private static HttpClient client = new HttpClient();
+
 		public static async Task PostReading(object rd, string url)
 		{
 			client = new HttpClient();
@@ -52,6 +54,26 @@ namespace HomeSensor
 				Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
 			}
 		}
+
+        public static async Task<bool> GetSensor(string id)
+        {
+            client = new HttpClient();
+            var slist = new List<Sensor>();
+            try
+            {
+                string resourceAddress = "http://139.59.172.240:3000/api/sensor?id=" + id;               
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.GetStringAsync(resourceAddress);
+                if (string.IsNullOrEmpty(response))
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("get sensor error:  " + ex.Message);
+                Common.Logger(ex.Message);
+            }
+            return true;
+        }
 
         public static DateTime GetNistTime()
         {
@@ -118,8 +140,35 @@ namespace HomeSensor
 				return (T)deserializer.ReadObject(ms);
 			}
 		}
-			
-		public static string GetSerialNumber()
+		
+        public static async Task CheckSensor()
+        {      
+            XmlDocument doc = new XmlDocument();
+            doc.Load("/home/pi/PiSensors/PiSensors/HomeSensor/HomeSensor/globalVar.xml");
+            XmlNode node = doc.DocumentElement.SelectSingleNode("/sensorId");
+            if (string.IsNullOrEmpty(node.InnerText))
+            {
+                Sensor s = EnterSensorDetails();
+                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                {
+                    await PostReading(s, "sensor");
+                }             
+                node.InnerText = s.Id;
+            }
+        }
+
+        private static Sensor EnterSensorDetails()
+        {
+            Sensor snr = new Sensor();
+            Console.WriteLine("Please enter a sensor name...");
+            snr.Name = Console.ReadLine();
+            Console.WriteLine("Please enter a sensor description...");
+            snr.Description = Console.ReadLine();
+            snr.Id = GetSerialNumber();
+            return snr;
+        }
+
+        public static string GetSerialNumber()
 		{
 			string line = "", result = "";
 			try
