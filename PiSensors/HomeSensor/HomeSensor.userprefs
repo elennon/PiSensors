@@ -1,16 +1,16 @@
 ﻿<Properties StartupItem="HomeSensor/HomeSensor.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="HomeSensor/Main.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="HomeSensor/Common.cs">
     <Files>
-      <File FileName="HomeSensor/Models/Mlx906.cs" Line="43" Column="47" />
-      <File FileName="HomeSensor/Common.cs" Line="136" Column="17" />
-      <File FileName="HomeSensor/Models/Sdp610.cs" Line="40" Column="8" />
-      <File FileName="HomeSensor/Models/Sht15.cs" Line="19" Column="28" />
-      <File FileName="HomeSensor/Models/CavityTemp.cs" Line="39" Column="26" />
-      <File FileName="HomeSensor/Main.cs" Line="26" Column="4" />
-      <File FileName="HomeSensor/Models/Hflux.cs" Line="10" Column="28" />
-      <File FileName="HomeSensor/Models/Reading.cs" Line="17" Column="6" />
-      <File FileName="HomeSensor/Models/NotSenters.cs" Line="5" Column="19" />
+      <File FileName="HomeSensor/Models/Mlx906.cs" Line="1" Column="1" />
+      <File FileName="HomeSensor/Common.cs" Line="11" Column="38" />
+      <File FileName="HomeSensor/Models/Sdp610.cs" Line="1" Column="1" />
+      <File FileName="HomeSensor/Models/Sht15.cs" Line="1" Column="1" />
+      <File FileName="HomeSensor/Models/CavityTemp.cs" Line="1" Column="1" />
+      <File FileName="HomeSensor/Main.cs" Line="1" Column="1" />
+      <File FileName="HomeSensor/Models/Hflux.cs" Line="1" Column="1" />
+      <File FileName="HomeSensor/Models/Reading.cs" Line="1" Column="1" />
+      <File FileName="HomeSensor/Models/NotSenters.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

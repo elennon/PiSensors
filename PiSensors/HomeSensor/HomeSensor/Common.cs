@@ -151,6 +151,7 @@ namespace HomeSensor
                 Sensor s = EnterSensorDetails();
                 if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                 {
+					var tftf = Common.JsonSerializer(s);
                     await PostReading(s, "sensor");
                 }             
                 node.InnerText = s.Id;
@@ -185,7 +186,7 @@ namespace HomeSensor
 					{
 						while ((line = reader.ReadLine ()) != null) 
 						{
-							result = line;
+							result = line.Split(':')[1].Trim();
 						}
 					}
 				}
