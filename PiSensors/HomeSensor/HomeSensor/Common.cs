@@ -24,7 +24,6 @@ namespace HomeSensor
 
 		public static async Task PostReading(object rd, string url)
 		{
-			client = new HttpClient();
 			try
 			{
                 string resourceAddress = "http://139.59.172.240:3000/api/" + url;   // "http://192.168.43.167/moosareback/api/" + url;
@@ -57,8 +56,6 @@ namespace HomeSensor
 
         public static async Task<bool> GetSensor(string id)
         {
-            client = new HttpClient();
-            var slist = new List<Sensor>();
             try
             {
                 string resourceAddress = "http://139.59.172.240:3000/api/sensor?id=" + id;               
@@ -104,7 +101,6 @@ namespace HomeSensor
 			{
 				Log(message, w);
 			}
-            //File.AppendAllText(@"/home/pi/sensors_log.txt", message + Environment.NewLine);
         }
 
 		public static void Log(string logMessage, TextWriter w)
@@ -142,20 +138,24 @@ namespace HomeSensor
 		}
 		
         public static async Task CheckSensor()
-        {      
-            XmlDocument doc = new XmlDocument();
-            doc.Load("/home/pi/PiSensors/PiSensors/HomeSensor/HomeSensor/globalVar.xml");
-            XmlNode node = doc.DocumentElement.SelectSingleNode("/sensorId");
-            if (string.IsNullOrEmpty(node.InnerText))
-            {
-                Sensor s = EnterSensorDetails();
-                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-                {
-					var tftf = Common.JsonSerializer(s);
-                    await PostReading(s, "sensor");
-                }             
-                node.InnerText = s.Id;
-            }
+        {    
+			try {
+				Sensor sr = new Sensor();
+				string json = File.ReadAllText("/home/pi/PiSensors/PiSensors/HomeSensor/HomeSensor/deviceInfo.json");
+				if (string.IsNullOrEmpty(json))
+				{
+					sr = JsonConvert.DeserializeObject<Sensor>(json);
+					sr = EnterSensorDetails();
+					if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+					{
+						await PostReading(sr, "sensor");
+					}             												
+					File.WriteAllText("/home/pi/PiSensors/PiSensors/HomeSensor/HomeSensor/deviceInfo.json", Common.JsonSerializer(sr));
+				}
+			} catch (Exception ex) {
+				Console.WriteLine("check sensor error:  " + ex.Message + "  time: " + DateTime.Today.ToString());
+				Common.Logger(ex.Message + ". time: ");
+			}
         }
 
         private static Sensor EnterSensorDetails()

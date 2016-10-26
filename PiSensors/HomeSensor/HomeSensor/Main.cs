@@ -28,7 +28,7 @@ class Programer
 			//_bw.RunWorkerAsync (sdp);
             while(run)
 			{    
-				System.Threading.Thread.Sleep(1000);
+				System.Threading.Thread.Sleep(10000);
 				try {
                     //GetMlx906().Wait();
                     //GetCavityTemp().Wait();
