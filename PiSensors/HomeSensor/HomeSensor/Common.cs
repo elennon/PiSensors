@@ -21,6 +21,10 @@ namespace HomeSensor
 	{
         private static List<NotSenters> notSenters = new List<NotSenters>();
 		private static HttpClient client = new HttpClient();
+		public static int counter {
+			get;
+			set;
+		}
 
 		public static async Task PostReading(object rd, string url)
 		{
@@ -32,8 +36,9 @@ namespace HomeSensor
                 if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                 {            
                     var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
-                    Console.WriteLine("response:  " + response.ReasonPhrase + "   @"+ GetNistTime().ToLongTimeString());
-                    if(notSenters.Count > 0)
+                    Console.WriteLine("response: #"+counter+" " + response.ReasonPhrase + "   @"+ GetNistTime().ToLongTimeString());
+					counter ++;
+					if(notSenters.Count > 0)
                     {
                         foreach (var item in notSenters)
                         {

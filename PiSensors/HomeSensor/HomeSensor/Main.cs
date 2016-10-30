@@ -22,19 +22,20 @@ class Programer
         
         static void Main(string[] args)
         {
+			Common.counter = 0;
             Common.CheckSensor().Wait();
             
 			//_bw.DoWork += bw_DoWork;
 			//_bw.RunWorkerAsync (sdp);
             while(run)
 			{    
-				System.Threading.Thread.Sleep(10000);
+				System.Threading.Thread.Sleep(5);
 				try {
                     //GetMlx906().Wait();
                     //GetCavityTemp().Wait();
                     //GetSdp610().Wait();
                     //GetSht15().Wait();
-                    GetBMP180().Wait();
+                    //GetBMP180().Wait();
                     GetHflux().Wait();
                 } catch (Exception ex) {
 					Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
