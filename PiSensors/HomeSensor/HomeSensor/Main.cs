@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using HomeSensor.Models;
 using System.ComponentModel;
+using System.Web;
 
 namespace HomeSensor
 {
@@ -23,6 +24,7 @@ class Programer
         static void Main(string[] args)
         {
 			Common.counter = 0;
+			Common.notSenters = new List<NotSenters> ();
             Common.CheckSensor().Wait();
             
 			//_bw.DoWork += bw_DoWork;
@@ -36,7 +38,7 @@ class Programer
                     //GetSdp610().Wait();
                     //GetSht15().Wait();
                     //GetBMP180().Wait();
-                    GetHflux().Wait();
+					GetHflux().Wait();
                 } catch (Exception ex) {
 					Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
 				}					
@@ -56,7 +58,16 @@ class Programer
         private static async Task GetHflux()
         {
             Hflux hflx = new Hflux();
-            await Common.PostReading(hflx, "Hflux");
+			Console.WriteLine ("flux: " + hflx.Val);
+
+			if (CheckInternet ()) { 
+				if (Common.notSenters.Count () > 0) {
+					Common.SendNotSent();
+				}
+				await Common.PostReading (hflx, "Hflux");
+			} else {
+				Common.AddToNotSent (hflx, "Hflux");
+			}
         }
 
         private static async Task GetSht15()
@@ -99,6 +110,24 @@ class Programer
 		{
 			var bmp = new Bmp180 ("/dev/i2c-1");
             await Common.PostReading(bmp, "Bmp180");
-		}	
+		}
+
+		private static bool CheckInternet ()
+		{
+			try
+			{
+				using (var client = new System.Net.WebClient())
+				{
+					using (var stream = client.OpenRead("http://www.google.com"))
+					{
+						return true;
+					}
+				}
+			}
+			catch
+			{
+				return false;
+			}
+		}
     }
 }

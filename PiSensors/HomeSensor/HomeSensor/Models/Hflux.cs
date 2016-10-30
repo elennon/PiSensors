@@ -12,9 +12,10 @@ namespace HomeSensor.Models
         public Hflux()
         {
             this.Id = Guid.NewGuid();
-            this.Sensor = Globals.SerialNumber;
-            this.Ip = "hflux";
+			this.Sensor = "hflux";
+			this.Ip = Globals.SerialNumber;
             this.CreatedAt = DateTimeOffset.Now;
+			this.Val = GetHflux ();
             this.Ok = _ok;
         }
 

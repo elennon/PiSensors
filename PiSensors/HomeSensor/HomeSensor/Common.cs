@@ -19,7 +19,11 @@ namespace HomeSensor
 {
 	public static class Common
 	{
-        private static List<NotSenters> notSenters = new List<NotSenters>();
+        //private static List<NotSenters> notSenters = new List<NotSenters>();
+		public static List<NotSenters> notSenters {
+			get;
+			set;
+		}
 		private static HttpClient client = new HttpClient();
 		public static int counter {
 			get;
@@ -33,24 +37,9 @@ namespace HomeSensor
                 string resourceAddress = "http://139.59.172.240:3000/api/" + url;   // "http://192.168.43.167/moosareback/api/" + url;
                 string postBody = Common.JsonSerializer(rd);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-                {            
-                    var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
-                    Console.WriteLine("response: #"+counter+" " + response.ReasonPhrase + "   @"+ GetNistTime().ToLongTimeString());
-					counter ++;
-					if(notSenters.Count > 0)
-                    {
-                        foreach (var item in notSenters)
-                        {
-                            await client.PostAsync(item.Url, new StringContent(item.Body, Encoding.UTF8, "application/json"));
-                        }
-                        notSenters.Clear();
-                    }
-                }
-                else
-                {
-                    notSenters.Add(new NotSenters { Body = postBody, Url = resourceAddress });
-                }
+				var response = await client.PostAsync(resourceAddress, new StringContent(postBody, Encoding.UTF8, "application/json"));
+				Console.WriteLine("response: #"+counter+" " + response.ReasonPhrase + "   @"+ GetNistTime().ToLongTimeString());
+				counter ++;
 			}
 			catch (Exception ex)
 			{
@@ -58,6 +47,27 @@ namespace HomeSensor
 				Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
 			}
 		}
+
+		public static async Task AddToNotSent(object rd, string url)
+		{
+			Common.notSenters.Add (new NotSenters{ Body = Common.JsonSerializer (rd), Url = url });
+		}
+
+		public static async Task SendNotSent()
+		{			
+			try {
+				foreach (var item in notSenters)
+				{
+					await PostReading(item.Body, item.Url);
+				}
+				notSenters.Clear();
+
+			} catch (Exception ex) {
+				Console.WriteLine("SendNotSent error:  " + ex.Message);
+				Common.Logger(ex.Message + ". time: " + DateTime.Today.ToLongDateString() );
+			}
+		}
+
 
         public static async Task<bool> GetSensor(string id)
         {
